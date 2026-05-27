@@ -1,1 +1,87 @@
-index.html
+<!DOCTYPE html>
+<html lang="ur">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eid Mubarak Wishes</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: white;
+            text-align: center;
+            padding: 50px 20px;
+            margin: 0;
+        }
+        .container {
+            max-width: 500px;
+            margin: auto;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(5px);
+        }
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: #ffd700;
+        }
+        p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+        }
+        .btn-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .btn {
+            background-color: #ffd700;
+            color: #1e3c72;
+            padding: 15px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: transform 0.2s, background-color 0.2s;
+            text-decoration: none;
+        }
+        .btn:hover {
+            background-color: #fff;
+            transform: scale(1.05);
+        }
+        .message {
+            margin-top: 30px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #00ffcc;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>🌙 Eid Mubarak!</h1>
+    <p>Apna rishta select karein aur Eid ki khushi payein:</p>
+    
+    <div class="btn-container">
+        <button class="btn" onclick="showMessage('Eid Mubarak Meri Jaan! ❤️ Aapko aur aapki family ko Eid bohot bohot mubarak ho.')">Eid Mubarak Jan</button>
+        <button class="btn" onclick="showMessage('Eid Mubarak Mere Yaar! 🌟 Allah hamari dosti ko hamesha salamat rakhe.')">Eid Mubarak Dost</button>
+    </div>
+
+    <div id="wishMessage" class="message"></div>
+</div>
+
+<script>
+    function showMessage(msg) {
+        var messageDiv = document.getElementById('wishMessage');
+        messageDiv.innerText = msg;
+        messageDiv.style.display = 'block';
+    }
+</script>
+
+</body>
+</html>
