@@ -12,6 +12,7 @@
             text-align: center;
             padding: 50px 20px;
             margin: 0;
+            overflow-x: hidden;
         }
         .container {
             max-width: 500px;
@@ -21,11 +22,13 @@
             border-radius: 15px;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
             backdrop-filter: blur(5px);
+            transition: all 0.5s ease;
         }
         h1 {
             font-size: 2.5rem;
             margin-bottom: 20px;
             color: #ffd700;
+            animation: fadeInDown 1s ease;
         }
         p {
             font-size: 1.2rem;
@@ -45,19 +48,91 @@
             border: none;
             border-radius: 25px;
             cursor: pointer;
-            transition: transform 0.2s, background-color 0.2s;
+            transition: transform 0.3s, background-color 0.3s, box-shadow 0.3s;
             text-decoration: none;
         }
         .btn:hover {
             background-color: #fff;
-            transform: scale(1.05);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.4);
         }
-        .message {
-            margin-top: 30px;
-            font-size: 1.5rem;
+        
+        /* New Page/Card Styling */
+        .wishing-page {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 100;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.6s ease-in-out;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .wishing-page.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .card-content {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 30px;
+            border-radius: 20px;
+            max-width: 450px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transform: scale(0.7);
+            transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+        }
+        .wishing-page.active .card-content {
+            transform: scale(1);
+        }
+        .wish-image {
+            width: 100%;
+            max-width: 300px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+            animation: pulse 2s infinite alternate;
+        }
+        .wish-text {
+            font-size: 1.6rem;
             font-weight: bold;
-            color: #00ffcc;
-            display: none;
+            color: #fff;
+            line-height: 1.5;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+        .back-btn {
+            margin-top: 25px;
+            background: transparent;
+            color: #ffd700;
+            border: 2px solid #ffd700;
+            padding: 10px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        .back-btn:hover {
+            background: #ffd700;
+            color: #0f2027;
+        }
+
+        /* Animations */
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes pulse {
+            from { transform: scale(1); }
+            to { transform: scale(1.03); }
         }
     </style>
 </head>
@@ -68,18 +143,41 @@
     <p>Apna rishta select karein aur Eid ki khushi payein:</p>
     
     <div class="btn-container">
-        <button class="btn" onclick="showMessage('Eid Mubarak Meri Jaan! ❤️ Aapko aur aapki family ko Eid bohot bohot mubarak ho.')">Eid Mubarak Jan</button>
-        <button class="btn" onclick="showMessage('Eid Mubarak Mere Yaar! 🌟 Allah hamari dosti ko hamesha salamat rakhe.')">Eid Mubarak Dost</button>
+        <button class="btn" onclick="openWishPage('jan')">Eid Mubarak Jan</button>
+        <button class="btn" onclick="openWishPage('dost')">Eid Mubarak Dost</button>
     </div>
+</div>
 
-    <div id="wishMessage" class="message"></div>
+<div id="wishingPage" class="wishing-page">
+    <div class="card-content">
+        <img id="wishImage" src="" alt="Eid Mubarak" class="wish-image">
+        <div id="wishText" class="wish-text"></div>
+        <button class="back-btn" onclick="closeWishPage()">Back Go To Home</button>
+    </div>
 </div>
 
 <script>
-    function showMessage(msg) {
-        var messageDiv = document.getElementById('wishMessage');
-        messageDiv.innerText = msg;
-        messageDiv.style.display = 'block';
+    function openWishPage(type) {
+        var page = document.getElementById('wishingPage');
+        var img = document.getElementById('wishImage');
+        var text = document.getElementById('wishText');
+
+        if(type === 'jan') {
+            text.innerHTML = "Eid Mubarak Meri Jaan! ❤️<br><br>Aapko aur aapki family ko Eid bohot bohot mubarak ho. Allah aapko hamesha khush rakhe!";
+            // Niche apni pasand ki image ka link dalein (Abhi default Eid pic lagi hai)
+            img.src = "https://images.unsplash.com/photo-1564507592333-c60657eea523?q=80&w=500"; 
+        } 
+        else if(type === 'dost') {
+            text.innerHTML = "Eid Mubarak Mere Yaar! 🌟<br><br>Allah hamari dosti ko hamesha salamat rakhe aur ye Eid tumhare liye dheron khushiyan laye.";
+            // Niche apni pasand ki image ka link dalein (Abhi default Eid pic lagi hai)
+            img.src = "https://images.unsplash.com/photo-1519817650390-64a93db51149?q=80&w=500";
+        }
+
+        page.classList.add('active');
+    }
+
+    function closeWishPage() {
+        document.getElementById('wishingPage').classList.remove('active');
     }
 </script>
 
